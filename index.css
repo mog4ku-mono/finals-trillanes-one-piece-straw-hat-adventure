@@ -4,7 +4,7 @@
 
 /* Import fonts */
 @font-face {
-  font-family: 'OnePiece';
+  font-family: 'One Piece Font';
   src: url('assets/txt/one\ piece\ font.ttf') format('truetype');
 }
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&family=Reem+Kufi+Fun:wght@700&display=swap');
@@ -30,115 +30,121 @@ body {
    HEADER SECTION
 =========================== */
 .site-header {
-  background-color: var(--red-header);
+  background-color: #7a3024; /* red header */
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 1rem 3rem;
+  align-items: center;
+  padding: 20px 50px;
   position: relative;
-  z-index: 10;
 }
 
-.site-header .logo {
+.logo {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 15px;
 }
 
-.site-header .main-logo {
-  width: 90px;
+.main-logo {
+  width: 70px;
   height: auto;
 }
 
-.site-header h1 {
-  font-family: var(--title-font);
+h1 {
+  font-family: 'One Piece', sans-serif;
   font-size: 64px;
-  color: var(--text-white);
+  margin: 0;
+  display: flex;
+  gap: 10px;
 }
 
-.site-header h1 span {
-  color: var(--text-yellow);
+.straw-hat, .adventure {
+  -webkit-text-stroke: 1px black;
+  font-weight: 700;
+  background: linear-gradient(to bottom, #4db3ff 0%, #005f99 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.straw-hat {
+  text-shadow: 3px 2px 0 black; /* right shadow */
+}
+
+.adventure {
+  text-shadow: -3px 2px 0 black; /* left shadow */
 }
 
 /* ===========================
    SNS SECTION
 =========================== */
-.site-header .socials {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+.socials {
+  text-align: right;
 }
 
-.site-header .socials p {
-  font-family: var(--nav-font);
+.sns-title {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: bold;
   font-size: 16px;
-  font-weight: 700;
-  color: var(--text-white);
-  margin: 0 0 0.25rem 0;
+  color: white;
+  margin-bottom: 5px;
 }
 
-.site-header .social-icons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.site-header .social-icons img {
-  filter: brightness(0) invert(1);
-  width: 24px;
-  height: 24px;
+.social-icons img {
+  width: 22px;
+  height: 22px;
+  margin-left: 8px;
+  filter: brightness(0) invert(1); /* turn icons white */
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.site-header .social-icons img:hover {
-  transform: scale(1.15);
+.social-icons img:hover {
+  transform: scale(1.1);
 }
 
 /* ===========================
    ROPE DIVIDER
 =========================== */
 .rope-divider {
-  background: url('assets/img/rope0.png') repeat-x;
-  height: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  margin-top: -10px; /* overlap */
+}
+
+.rope-divider img {
+  width: 90%;
+  max-width: 1200px;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ===========================
    NAVIGATION BAR
 =========================== */
 .main-nav {
-  background: url('assets/img/one-piece-desktop-manga-panels-08t6bf9qk4odjpc8.jpg') repeat;
-  padding: 0.5rem 0;
+  background-image: url('assets/img/one-piece-desktop-manga-panels-08t6bf9qk4odjpc8.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .main-nav ul {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: 40px;
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 20px 0;
 }
 
-.main-nav .nav-btn {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-decoration: none;
-  color: var(--text-white);
+.nav-btn {
+  font-family: 'Open Sans Condensed', sans-serif;
   font-size: 24px;
-  font-family: var(--nav-font);
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-.icon-circle {
-  background: url('assets/img/gold-texture.jpg') center/cover no-repeat;
-  border-radius: 50%;
-  padding: 8px;
+  color: white;
+  text-decoration: none;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .icon-circle img {
@@ -146,12 +152,11 @@ body {
   height: 50px;
 }
 
-.nav-btn:hover .nav-text {
-  color: var(--text-yellow);
-}
-
-.nav-btn:hover .icon-circle {
-  background: linear-gradient(180deg, #fff, #ccc);
+.nav-btn:hover {
+  color: #FFD700;
+  background: linear-gradient(to bottom, #fff, #ccc);
+  border-radius: 50px;
+  padding: 10px;
 }
 
 /* ===========================
