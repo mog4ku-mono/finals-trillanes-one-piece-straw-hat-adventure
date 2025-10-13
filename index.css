@@ -1,0 +1,233 @@
+/* ===========================
+   GLOBAL HEADER & NAVIGATION
+=========================== */
+
+/* Import fonts */
+@font-face {
+  font-family: 'OnePiece';
+  src: url('assets/txt/one\ piece\ font.ttf') format('truetype');
+}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&family=Reem+Kufi+Fun:wght@700&display=swap');
+
+:root {
+  --red-header: #9d3022;
+  --text-white: #ffffff;
+  --text-yellow: #ffcc33;
+  --nav-font: 'Open Sans Condensed', sans-serif;
+  --title-font: 'OnePiece', serif;
+  --divider-red: #a02c1f;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: var(--text-white);
+  font-family: var(--nav-font);
+}
+
+/* ===========================
+   HEADER SECTION
+=========================== */
+.site-header {
+  background-color: var(--red-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 3rem;
+  position: relative;
+  z-index: 10;
+}
+
+.site-header .logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-header .main-logo {
+  width: 90px;
+  height: auto;
+}
+
+.site-header h1 {
+  font-family: var(--title-font);
+  font-size: 64px;
+  color: var(--text-white);
+}
+
+.site-header h1 span {
+  color: var(--text-yellow);
+}
+
+/* ===========================
+   SNS SECTION
+=========================== */
+.site-header .socials {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.site-header .socials p {
+  font-family: var(--nav-font);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0 0 0.25rem 0;
+}
+
+.site-header .social-icons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.site-header .social-icons img {
+  filter: brightness(0) invert(1);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.site-header .social-icons img:hover {
+  transform: scale(1.15);
+}
+
+/* ===========================
+   ROPE DIVIDER
+=========================== */
+.rope-divider {
+  background: url('assets/img/rope0.png') repeat-x;
+  height: 20px;
+}
+
+/* ===========================
+   NAVIGATION BAR
+=========================== */
+.main-nav {
+  background: url('assets/img/one-piece-desktop-manga-panels-08t6bf9qk4odjpc8.jpg') repeat;
+  padding: 0.5rem 0;
+}
+
+.main-nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.main-nav .nav-btn {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text-white);
+  font-size: 24px;
+  font-family: var(--nav-font);
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.icon-circle {
+  background: url('assets/img/gold-texture.jpg') center/cover no-repeat;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.icon-circle img {
+  width: 50px;
+  height: 50px;
+}
+
+.nav-btn:hover .nav-text {
+  color: var(--text-yellow);
+}
+
+.nav-btn:hover .icon-circle {
+  background: linear-gradient(180deg, #fff, #ccc);
+}
+
+/* ===========================
+   WATER GIF SECTION
+=========================== */
+.op-water {
+  background: url('assets/img/gifs/water.gif') center/cover no-repeat;
+  height: 120px;
+  width: 100%;
+}
+
+/* ===========================
+   MULTI-LAYER SCROLL
+=========================== */
+.op-banner {
+  position: relative;
+  overflow: hidden;
+  height: 178px;
+}
+
+.scroll-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 300%;
+  height: 100%;
+}
+
+.scroll-track img {
+  width: 262px;
+  height: 178px;
+  object-fit: cover;
+}
+
+/* Animation speeds */
+.op-scroll1 .scroll-track {
+  display: flex;
+  animation: scroll-left-fast 40s linear infinite;
+}
+
+.op-scroll2 .scroll-track {
+  display: flex;
+  animation: scroll-left-slow 80s linear infinite;
+}
+
+.op-scroll3 .scroll-track {
+  display: flex;
+  animation: scroll-left-medium 55s linear infinite;
+}
+
+@keyframes scroll-left-fast {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes scroll-left-slow {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes scroll-left-medium {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===========================
+   #ONE PIECE DIVIDER
+=========================== */
+.intro h2 {
+  text-align: center;
+  font-family: 'Reem Kufi Fun', sans-serif;
+  font-size: 140px;
+  color: var(--text-yellow);
+  background-color: var(--divider-red);
+  padding: 1rem 0;
+  margin: 0;
+  text-transform: uppercase;
+}
