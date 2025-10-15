@@ -7,6 +7,22 @@
   font-family: 'One Piece Font';
   src: url('assets/txt/one\ piece\ font.ttf') format('truetype');
 }
+@font-face {
+  font-family: 'Reem Kufi Fun';
+  src: url('assets/txt/ReemKufiFun-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Reem Kufi Fun Medium';
+  src: url('assets/txt/ReemKufiFun-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Reem Kufi Fun Regular';
+  src: url('assets/txt/ReemKufiFun-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Reem Kufi Fun SemiBold';
+  src: url('assets/txt/ReemKufiFun-SemiBold.ttf') format('truetype');
+}
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&family=Reem+Kufi+Fun:wght@700&display=swap');
 
 :root {
@@ -257,12 +273,12 @@ body {
 .main-nav {
   width: 100%;
   max-width: 100%;
-  height: 53px;
+  height: 60px;
   margin: 0 auto;
   flex-shrink: 0;
   box-sizing: border-box;
   background: url("assets/img/one-piece-desktop-manga-panels-08t6bf9qk4odjpc8.jpg")
-              lightgray 50% / cover no-repeat;
+              rgb(130, 12, 12) 50% / cover no-repeat;
 
   display: flex;
   align-items: center;
@@ -280,8 +296,8 @@ body {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    rgba(0,0,0,0.55),
-    rgba(0,0,0,0.45)
+    rgba(97, 11, 11, 0.775),
+    rgba(19, 1, 1, 0.484)
   );
   z-index: 1; /* sits above bg, below nav content */
   pointer-events: none;
@@ -457,13 +473,32 @@ body {
 }
 
 /* ===========================
-   WATER GIF SECTION
+   WATER DIVIDER SECTION
 =========================== */
-.op-water {
-  background: url('assets/img/gifs/water.gif') center/cover no-repeat;
-  height: 120px;
-  width: 100%;
+/* Make sure navbar and divider connect seamlessly */
+.main-nav {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
+
+.water-divider {
+  width: 100%;
+  max-width: 100%;
+  height: 95px;
+  flex-shrink: 0;
+  background: url("assets/img/gifs/water.gif") lightgray 50% / cover no-repeat;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Remove possible default spacing from elements */
+header, nav, .water-divider {
+  display: block;
+  margin: 0;
+  padding: 0;
+  margin-top: -53px;
+}
+
 
 /* ===========================
    MULTI-LAYER SCROLL
@@ -471,65 +506,449 @@ body {
 .op-banner {
   position: relative;
   overflow: hidden;
-  height: 178px;
+  /* height = 3 rows * 199px (per your layout spec) */
+  height: calc(199px * 3); /* 597px */
+  width: 100%;
+  max-width: 100%;
 }
 
+/* Each scroll layer becomes a horizontal strip (stacked) */
 .scroll-layer {
   position: absolute;
-  top: 0;
   left: 0;
+  width: 100%;
+  height: 33.3333%; /* one third of op-banner */
+  overflow: hidden;
+  display: block;
+  /* ensure pointer events pass through if you want clicks to hit content below */
+  pointer-events: none;
+}
+
+/* Position each layer vertically so they stack */
+.op-scroll1 { top: 0%;   pointer-events: auto; }   /* top row */
+.op-scroll2 { top: 33.3333%; pointer-events: auto; } /* middle row */
+.op-scroll3 { top: 66.6666%; pointer-events: auto; } /* bottom row */
+
+/* The track holds the inline images and moves horizontally */
+.scroll-track {
   display: flex;
-  width: 300%;
+  align-items: stretch;
   height: 100%;
+  /* Make the track wide enough by letting its content determine width.
+     We rely on duplicated images in your HTML so the second half forms the seamless loop. */
+  width: max-content;
+  will-change: transform;
 }
 
+/* images should match your Figma dimensions */
 .scroll-track img {
-  width: 262px;
-  height: 178px;
+  width: 294px;    /* per spec */
+  height: 199px;   /* per spec */
   object-fit: cover;
+  display: block;
+  flex: 0 0 auto;  /* do not shrink/grow */
 }
 
-/* Animation speeds */
+/* Animations per layer (tweak durations to taste) */
 .op-scroll1 .scroll-track {
-  display: flex;
-  animation: scroll-left-fast 40s linear infinite;
+  animation: scroll-left-1 68s linear infinite;
 }
 
 .op-scroll2 .scroll-track {
-  display: flex;
-  animation: scroll-left-slow 80s linear infinite;
+  animation: scroll-left-2 80s linear infinite;
 }
 
 .op-scroll3 .scroll-track {
-  display: flex;
-  animation: scroll-left-medium 55s linear infinite;
+  animation: scroll-left-3 64s linear infinite;
 }
 
-@keyframes scroll-left-fast {
+/* Keyframes: translate the whole track left by 50% (works because content is duplicated) */
+@keyframes scroll-left-1 {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scroll-left-2 {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scroll-left-3 {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-@keyframes scroll-left-slow {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* Optional: small visual separation line between rows */
+.op-scroll1,
+.op-scroll2,
+.op-scroll3 {
+  box-sizing: border-box;
 }
 
-@keyframes scroll-left-medium {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* If you want the GIF frames to align flush to the left edge of the container: */
+.op-banner .scroll-track:first-child img:first-child {
+  margin-left: 0;
 }
 
 /* ===========================
-   #ONE PIECE DIVIDER
+   SCROLL CONTROL WIDGET (Morph Version)
 =========================== */
-.intro h2 {
-  text-align: center;
-  font-family: 'Reem Kufi Fun', sans-serif;
-  font-size: 140px;
-  color: var(--text-yellow);
-  background-color: var(--divider-red);
-  padding: 1rem 0;
-  margin: 0;
-  text-transform: uppercase;
+.scroll-control {
+  position: absolute;
+  top: 50%;
+  right: 32px;
+  transform: translateY(-50%) scale(0.9);
+  z-index: 20;
+
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.4s ease;
+  filter: drop-shadow(0 0 6px rgba(45, 7, 7, 0.7))
+          drop-shadow(0 0 15px rgba(55, 8, 8, 0.5))
+          drop-shadow(0 0 25px rgba(232, 0, 0, 0.3));
 }
+
+/* Fade in when ready */
+.scroll-control.show {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+/* Hover: amplify glow + gentle pop */
+.scroll-control:hover {
+  filter: drop-shadow(0 0 12px rgba(155, 6, 6, 0.9))
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+          drop-shadow(0 0 32px rgba(255, 255, 255, 0.6));
+  transform: translateY(-50%) scale(4);
+}
+
+/* SVG styling */
+.scroll-control svg {
+  width: 34px;
+  height: 34px;
+  fill: #fff;
+  stroke: none;
+  transition: transform 0.3s ease;
+}
+
+.scroll-control:active svg {
+  transform: scale(0.9);
+}
+
+/* ===========================
+   ONE PIECE Title & Divider
+=========================== */
+.op-title-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -310px; /* still overlaps multilayer */
+  overflow: visible;
+}
+
+/* Title text */
+.op-title {
+  position: absolute;
+  top: 70px;
+  text-align: center;
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-weight: 700;
+  font-size: 140px;
+  line-height: 1.1;
+  padding-bottom: 30px;
+  background: linear-gradient(90deg, #ffec20 0%, #f9eb57 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 6px 8px rgba(0, 0, 0, 0.25),
+    0 0 15px rgba(255, 230, 90, 0.2);
+  z-index: 10;
+  overflow: visible;
+
+  /* ✨ Fade + rise effect */
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeRise 1.6s ease-out 0.3s forwards;
+}
+
+/* 🔸 Keyframes for fade + rise */
+@keyframes fadeRise {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Red divider */
+.red-divider {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  z-index: 5;
+  margin-top: 250px; /* stays fixed regardless of .op-title position */
+  background: linear-gradient(
+    180deg,
+    #c6423b 0%,
+    #a92f28 45%,
+    #741e1b 100%
+  );
+  box-shadow:
+    0 -4px 8px rgba(255, 60, 60, 0.3) inset,
+    0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+/* Light shimmer effect */
+.red-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 4s linear infinite;
+  opacity: 0.4;
+}
+
+/* Subtle top glow */
+.red-divider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 200, 100, 0.6),
+    rgba(255, 200, 100, 0)
+  );
+}
+
+/* Divider shimmer */
+@keyframes shimmer {
+  from {
+    left: -50%;
+  }
+  to {
+    left: 150%;
+  }
+}
+
+/* Responsive tweak */
+@media (max-width: 1200px) {
+  .op-title {
+    font-size: 100px;
+    width: auto;
+  }
+  .red-divider {
+    width: 100%;
+  }
+}
+
+/* ===========================
+   ONE PIECE Description Banner
+=========================== */
+.op-desc-section {
+  position: relative;
+  width: 100%;
+  height: 504px;
+  flex-shrink: 0;
+  margin: 0 auto;
+  background: url("assets/img/one-piece-pattern.jpg") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Dark overlay (flat filter instead of gradient) */
+.op-desc-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* solid dark filter */
+  backdrop-filter: brightness(0.7); /* optional — makes bg image darker too */
+  pointer-events: none;
+}
+
+/* Text styling */
+.op-desc-text {
+  position: relative;
+  width: 1361px;
+  height: auto;
+  color: #fff;
+  text-align: center;
+  font-family: "Reddit Sans", sans-serif;
+  font-size: 40px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.4;
+  z-index: 2;
+  padding: 0 40px;
+
+  /* Fade-in effect for nice entrance */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeRise 1.8s ease-out 0.6s forwards;
+}
+
+/* Reuse your fade-rise keyframes */
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .op-desc-section {
+    width: 100%;
+    height: auto;
+    padding: 60px 20px;
+  }
+
+  .op-desc-text {
+    font-size: 24px;
+    width: 100%;
+  }
+}
+
+/* ===========================
+   HOIST YOUR FLAG Section
+=========================== */
+.second-red-divider {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  z-index: 5;
+  background: linear-gradient(
+    180deg,
+    #c6423b 0%,
+    #a92f28 45%,
+    #741e1b 100%
+  );
+  box-shadow:
+    0 -4px 8px rgba(255, 60, 60, 0.3) inset,
+    0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  /* reduce this spacing */
+  margin-bottom: 20px; /* was 80px */
+}
+
+.op-flag-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* reduce this padding */
+  padding-top: 1px; /* was 80px */
+  padding-bottom: 1px;
+  overflow: visible;
+  background: transparent;
+}
+/* Title styling */
+.op-flag-title {
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  line-height: 1.1;
+  text-align: center;
+  background: linear-gradient(90deg, #ffec20 0%, #f9eb57 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 6px 8px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 230, 90, 0.3);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: flagRise 1.6s ease-out 0.4s forwards;
+  z-index: 10;
+  margin-top: -140px; 
+}
+
+/* Red divider */
+/* Light shimmer effect */
+.second-red-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 4s linear infinite;
+  opacity: 0.4;
+}
+
+/* Subtle top glow */
+.second-red-divider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 200, 100, 0.6),
+    rgba(255, 200, 100, 0)
+  );
+}
+
+/* Divider shimmer */
+@keyframes shimmer {
+  from { left: -50%; }
+  to { left: 150%; }
+}
+
+/* Rise + fade animation */
+@keyframes flagRise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive tweak */
+@media (max-width: 1200px) {
+  .op-flag-title {
+    font-size: 80px;
+  }
+}
+
