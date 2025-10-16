@@ -1,0 +1,843 @@
+/* ===========================
+
+   GLOBAL HEADER & NAVIGATION
+
+@font-face {
+  font-family: 'One Piece Font';
+  src: url('../txt/one\ piece\ font.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Reem Kufi Fun';
+  src: url('../txt/ReemKufiFun-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Reem Kufi Fun Medium';
+  src: url('../txt/ReemKufiFun-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Reem Kufi Fun Regular';
+  src: url('../txt/ReemKufiFun-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Reem Kufi Fun SemiBold';
+  src: url('../txt/ReemKufiFun-SemiBold.ttf') format('truetype');
+}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&family=Reem+Kufi+Fun:wght@700&display=swap');
+
+:root {
+  --red-header: #9d3022;
+  --text-white: #ffffff;
+  --text-yellow: #ffcc33;
+  --nav-font: 'Open Sans Condensed', sans-serif;
+  --title-font: 'OnePiece', serif;
+  --divider-red: #a02c1f;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: var(--text-white);
+  font-family: var(--nav-font);
+}
+
+
+html, body {
+  min-height: 100%;
+  background: url("../img/gifs/water.gif") center / cover no-repeat fixed;
+  background-color: #000; 
+}
+
+=========================== */
+
+
+/* ===========================
+   WATER DIVIDER SECTION
+=========================== */
+/* Make sure navbar and divider connect seamlessly */
+.main-nav {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.water-divider {
+  width: 100%;
+  max-width: 100%;
+  height: 95px;
+  flex-shrink: 0;
+  background: url("../img/gifs/water.gif") lightgray 50% / cover no-repeat;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Remove possible default spacing from elements */
+header, nav, .water-divider {
+  display: block;
+  margin: 0;
+  padding: 0;
+  margin-top: -53px;
+}
+
+/* ===========================
+   MULTI-LAYER SCROLL
+=========================== */
+.op-banner {
+  position: relative;
+  overflow: hidden;
+  /* height = 3 rows * 199px (per your layout spec) */
+  height: calc(199px * 3); /* 597px */
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Each scroll layer becomes a horizontal strip (stacked) */
+.scroll-layer {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 33.3333%; /* one third of op-banner */
+  overflow: hidden;
+  display: block;
+  /* ensure pointer events pass through if you want clicks to hit content below */
+  pointer-events: none;
+}
+
+/* Position each layer vertically so they stack */
+.op-scroll1 { top: 0%;   pointer-events: auto; }   /* top row */
+.op-scroll2 { top: 33.3333%; pointer-events: auto; } /* middle row */
+.op-scroll3 { top: 66.6666%; pointer-events: auto; } /* bottom row */
+
+/* The track holds the inline images and moves horizontally */
+.scroll-track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  /* Make the track wide enough by letting its content determine width.
+     We rely on duplicated images in your HTML so the second half forms the seamless loop. */
+  width: max-content;
+  will-change: transform;
+}
+
+/* images should match your Figma dimensions */
+.scroll-track img {
+  width: 294px;    /* per spec */
+  height: 199px;   /* per spec */
+  object-fit: cover;
+  display: block;
+  flex: 0 0 auto;  /* do not shrink/grow */
+}
+
+/* Animations per layer (tweak durations to taste) */
+.op-scroll1 .scroll-track {
+  animation: scroll-left-1 68s linear infinite;
+}
+
+.op-scroll2 .scroll-track {
+  animation: scroll-left-2 80s linear infinite;
+}
+
+.op-scroll3 .scroll-track {
+  animation: scroll-left-3 64s linear infinite;
+}
+
+/* Keyframes: translate the whole track left by 50% (works because content is duplicated) */
+@keyframes scroll-left-1 {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scroll-left-2 {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scroll-left-3 {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Optional: small visual separation line between rows */
+.op-scroll1,
+.op-scroll2,
+.op-scroll3 {
+  box-sizing: border-box;
+}
+
+/* If you want the GIF frames to align flush to the left edge of the container: */
+.op-banner .scroll-track:first-child img:first-child {
+  margin-left: 0;
+}
+
+/* ===========================
+   SCROLL CONTROL WIDGET (Morph Version)
+=========================== */
+.scroll-control {
+  position: absolute;
+  top: 50%;
+  right: 32px;
+  transform: translateY(-50%) scale(0.9);
+  z-index: 20;
+
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.4s ease;
+  filter: drop-shadow(0 0 6px rgba(45, 7, 7, 0.7))
+          drop-shadow(0 0 15px rgba(55, 8, 8, 0.5))
+          drop-shadow(0 0 25px rgba(232, 0, 0, 0.3));
+}
+
+/* Fade in when ready */
+.scroll-control.show {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+/* Hover: amplify glow + gentle pop */
+.scroll-control:hover {
+  filter: drop-shadow(0 0 12px rgba(155, 6, 6, 0.9))
+          drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+          drop-shadow(0 0 32px rgba(255, 255, 255, 0.6));
+  transform: translateY(-50%) scale(4);
+}
+
+/* SVG styling */
+.scroll-control svg {
+  width: 34px;
+  height: 34px;
+  fill: #fff;
+  stroke: none;
+  transition: transform 0.3s ease;
+}
+
+.scroll-control:active svg {
+  transform: scale(0.9);
+}
+
+
+
+/* ===========================
+   ONE PIECE Title & Divider
+=========================== */
+.op-title-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -310px; /* still overlaps multilayer */
+  overflow: visible;
+}
+
+/* Title text */
+.op-title {
+  position: absolute;
+  top: 120px;
+  text-align: center;
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-weight: 700;
+  font-size: 140px;
+  line-height: 1.1;
+  padding-bottom: 30px;
+  background: linear-gradient(90deg, #ffec20 0%, #f9eb57 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 6px 8px rgba(0, 0, 0, 0.25),
+    0 0 15px rgba(255, 230, 90, 0.2);
+  z-index: 10;
+  overflow: visible;
+
+  /* ✨ Fade + rise effect */
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeRise 1.6s ease-out 0.3s forwards;
+}
+
+/* 🔸 Keyframes for fade + rise */
+@keyframes fadeRise {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Red divider */
+.red-divider {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  z-index: 5;
+  margin-top: 300px; /* stays fixed regardless of .op-title position */
+  background: linear-gradient(
+    180deg,
+    #c6423b 0%,
+    #a92f28 45%,
+    #741e1b 100%
+  );
+  box-shadow:
+    0 -4px 8px rgba(255, 60, 60, 0.3) inset,
+    0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+/* Light shimmer effect */
+.red-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 4s linear infinite;
+  opacity: 0.4;
+}
+
+/* Subtle top glow */
+.red-divider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 200, 100, 0.6),
+    rgba(255, 200, 100, 0)
+  );
+}
+
+/* Divider shimmer */
+@keyframes shimmer {
+  from {
+    left: -50%;
+  }
+  to {
+    left: 150%;
+  }
+}
+
+/* Responsive tweak */
+@media (max-width: 1200px) {
+  .op-title {
+    font-size: 100px;
+    width: auto;
+  }
+  .red-divider {
+    width: 100%;
+  }
+}
+
+/* ===========================
+   ONE PIECE Description Banner
+=========================== */
+.op-desc-section {
+  position: relative;
+  width: 100%;
+  height: 504px;
+  flex-shrink: 0;
+  margin: 0 auto;
+  background: url("../img/one-piece-pattern.jpg") center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Dark overlay (flat filter instead of gradient) */
+.op-desc-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* solid dark filter */
+  backdrop-filter: brightness(0.7); /* optional — makes bg image darker too */
+  pointer-events: none;
+}
+
+/* Text styling */
+.op-desc-text {
+  position: relative;
+  width: 1361px;
+  height: auto;
+  color: #fff;
+  text-align: center;
+  font-family: "Reddit Sans", sans-serif;
+  font-size: 40px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.4;
+  z-index: 2;
+  padding: 0 40px;
+
+  /* Fade-in effect for nice entrance */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeRise 1.8s ease-out 0.6s forwards;
+}
+
+/* Reuse your fade-rise keyframes */
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .op-desc-section {
+    width: 100%;
+    height: auto;
+    padding: 60px 20px;
+  }
+
+  .op-desc-text {
+    font-size: 24px;
+    width: 100%;
+  }
+}
+
+/* ===========================
+   HOIST YOUR FLAG Section
+=========================== */
+.second-red-divider {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  z-index: 5;
+  background: linear-gradient(
+    180deg,
+    #c6423b 0%,
+    #a92f28 45%,
+    #741e1b 100%
+  );
+  box-shadow:
+    0 -4px 8px rgba(255, 60, 60, 0.3) inset,
+    0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  /* reduce this spacing */
+  margin-bottom: 20px; /* was 80px */
+}
+
+.op-flag-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* reduce this padding */
+  padding-top: 1px; /* was 80px */
+  padding-bottom: 1px;
+  overflow: visible;
+  background: transparent;
+}
+/* Title styling */
+.op-flag-title {
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-weight: 700;
+  font-size: 90px;
+  line-height: 1.1;
+  text-align: center;
+  background: linear-gradient(90deg, #ffec20 0%, #f9eb57 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 6px 8px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 230, 90, 0.3);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: flagRise 1.6s ease-out 0.4s forwards;
+  z-index: 10;
+  margin-top: -140px; 
+}
+
+/* Red divider */
+/* Light shimmer effect */
+.second-red-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 4s linear infinite;
+  opacity: 0.4;
+}
+
+/* Subtle top glow */
+.second-red-divider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 200, 100, 0.6),
+    rgba(255, 200, 100, 0)
+  );
+}
+
+/* Divider shimmer */
+@keyframes shimmer {
+  from { left: -50%; }
+  to { left: 150%; }
+}
+
+/* Rise + fade animation */
+@keyframes flagRise {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive tweak */
+@media (max-width: 1200px) {
+  .op-flag-title {
+    font-size: 80px;
+  }
+}
+
+/* ===========================
+   SIGNUP HERO: WATER + BLUE PANEL
+   (left = water gif with dark filter,
+    right = blue gradient panel with subtle Luffy line-art)
+   =========================== */
+
+.signup-hero {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  gap: 0;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* remove unwanted space above signup section */
+.signup-hero {
+  margin-top: 0;
+  padding-top: 0;
+  position: relative;
+  top: -60px;
+}
+
+/* if the divider above has a bottom margin, neutralize it */
+.red-divider {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Left column: water gif with dark overlay */
+.signup-left.water-bg {
+  flex: 1 1 auto;
+  min-width: 320px;
+  height: 553px;
+  background: url("../img/gifs/water.gif") center / cover no-repeat;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* dark overlay on the gif */
+.signup-left.water-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* Right column: blue gradient */
+.signup-right {
+  width: 838px;
+  height: 553px;
+  flex: 0 0 838px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #020069 0%, #010022 100%);
+  padding: 48px 56px;
+}
+
+/* decorative Luffy line-art */
+.signup-right__art {
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/luffy-lineart.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 90% auto;
+  opacity: 0.5;
+  pointer-events: none;
+  filter: contrast(0.9) saturate(0.8);
+  mix-blend-mode: normal;
+  transform: translateX(0%);
+}
+
+/* content wrapper */
+.signup-right__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 720px;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* heading + lead */
+.signup-title {
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffd84a;
+  margin: 0 0 10px 0;
+  letter-spacing: 0.5px;
+}
+
+.signup-lead {
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 22px 0;
+  font-style: normal;
+  line-height: 1.45;
+  font-size: 15px;
+  opacity: 0.95;
+}
+
+/* ==========================================
+   UPDATED FORM (Figma floating-label style)
+   ========================================== */
+
+/* ---------- Signup form grid + alignment ---------- */
+/* Make the form align under the signup-lead text */
+.signup-right__inner {
+  /* keep your existing rules, plus these */
+  padding-left: 24px;      /* nudge content left so inputs align beneath the copy */
+  padding-right: 24px;
+}
+
+/* Two-column layout for the form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* left / right columns */
+  gap: 18px 28px;
+  align-items: start;
+  width: 100%;
+  max-width: 720px;
+  margin-bottom: 18px;
+}
+
+/* column wrapper (keeps structure stable) */
+.form-grid .col { display: flex; flex-direction: column; gap: 16px; }
+
+/* Input group visual container */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Label wraps the tag and the input for easy animation */
+.input-group label {
+  display: block;
+  width: 100%;
+  position: relative;
+  border-radius: 4px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.02);
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  overflow: visible;
+}
+
+/* actual input / textarea styles */
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  font-size: 14px;
+  font-family: "Reddit Sans", sans-serif;
+  resize: none;
+  line-height: 1.3;
+  padding: 0; /* label provides padding */
+}
+
+/* floating "blue tag" that acts like the Figma small label behind text */
+.label-tag {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  display: inline-block;
+  background: #020153;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  transform-origin: left top;
+  transition: transform .22s cubic-bezier(.2,.9,.3,1), top .22s ease, left .22s ease, opacity .18s ease;
+  opacity: 1;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(2,1,40,0.25) inset;
+}
+
+/* smaller tag width variant */
+.label-tag.small { width: auto; padding: 2px 6px; }
+
+/* When field active (focused or non-empty) move the label up and shrink it */
+.input-group.active label { border-color: #ffd84a; box-shadow: 0 6px 18px rgba(255,200,0,0.06); }
+.input-group.active .label-tag {
+  transform: translateY(-22px) scale(.86);
+  left: 8px;
+  top: 6px;
+  opacity: 1;
+}
+
+/* If textarea, keep the tag slightly higher */
+.textarea-group .label-tag { transform-origin: left top; }
+.textarea-group.active .label-tag { transform: translateY(-28px) scale(.86); }
+
+/* Placeholder visible state (when not active, position tag over left) */
+.input-group:not(.active) input::placeholder,
+.input-group:not(.active) textarea::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+/* Caret svg (blinking) — small tick at left inside the input area */
+.caret {
+  width: 10px;
+  height: 15px;
+  flex: 0 0 auto;
+  opacity: 0;                /* hide until input is focused */
+  transition: opacity .18s ease, transform .18s ease;
+  pointer-events: none;
+}
+.input-group.active .caret { opacity: 1; animation: blink 1s steps(1) infinite; transform: translateY(0); }
+
+/* blinking animation */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Focus glow on label/input */
+.input-group:focus-within label {
+  border-color: #ffd84a;
+  box-shadow: 0 10px 30px rgba(255,200,30,0.06);
+}
+
+/* Textarea size and padding — ensure readable */
+.input-group textarea {
+  min-height: 120px;
+  line-height: 1.3;
+  padding: 0;
+}
+
+/* Submit button tweaks: pop & text color change to yellow on hover */
+.btn-submit {
+  background: #020202;
+  border-radius: 4px;
+  width: 166px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.btn-submit .btn-text { color: #fff; font-family: "Reem Kufi Fun", sans-serif; font-size: 20px; }
+.btn-submit:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.5); }
+.btn-submit:hover .btn-text { color: #FFEA00; }
+
+/* Make sure the submit row centers the button */
+.row.submit-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 420px; /* adjust value as needed */
+  margin-top: 8px;
+  gap: 12px;
+}
+
+
+/* Responsive: on narrow screens stack columns into one */
+@media (max-width: 980px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .signup-right__inner { padding-left: 20px; padding-right: 20px; }
+  .row.submit-row { justify-content: center; }
+}
+
+/* Submit button */
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 166px;
+  height: 42px;
+  background: #020202;
+  color: #fff;
+  font-family: "Reem Kufi", sans-serif;
+  font-size: 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.btn-submit:hover {
+  color: #eff800;
+  transform: scale(1.05);
+}
+
+/* Bottom note */
+.signup-note {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1.5;
+}
+
