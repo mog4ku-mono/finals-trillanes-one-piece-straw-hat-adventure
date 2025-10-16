@@ -1,8 +1,3 @@
- 
-
-
-
-
 // -----------------------------
 // Form floating-label interaction
 // - adds/removes .active on .input-group when user focuses/has content
