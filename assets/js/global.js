@@ -37,6 +37,28 @@ document.addEventListener("DOMContentLoaded", () => {
 }); 
 
 // ===========================
+// HEADER COLLAPSE ON SCROLL
+// ===========================
+let lastScrollTop = 0;
+const header = document.querySelector(".site-header");
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (currentScroll > lastScrollTop && currentScroll > 100) {
+    // Scrolling down — collapse header
+    header.classList.add("collapsed");
+  } else if (currentScroll < lastScrollTop) {
+    // Scrolling up — show header
+    header.classList.remove("collapsed");
+  }
+
+  lastScrollTop = Math.max(currentScroll, 0);
+});
+
+
+
+// ===========================
 // MULTI-LAYER SCROLL DUPLICATION FIX
 // ===========================
 // This ensures each .scroll-track repeats enough times

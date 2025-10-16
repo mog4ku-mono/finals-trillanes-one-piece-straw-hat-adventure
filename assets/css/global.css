@@ -94,6 +94,7 @@ html, body {
   pointer-events: none;      /* allow clicks through the decorative text */
 }
 
+
 /* common shared styles for both title halves */
 .logo .straw-hat,
 .logo .adventure {
@@ -132,6 +133,44 @@ html, body {
   transform: translateY(-40px); /* same upward movement */
 }
 
+/* ===========================
+   HEADER + NAV COLLAPSE ANIMATION
+=========================== */
+
+/* Keep both fixed together at the top initially */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 250;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Navbar sits directly under header */
+.main-nav {
+  position: fixed;
+  top: 230px; /* matches header height */
+  left: 0;
+  width: 100%;
+  z-index: 200;
+  transition: top 0.4s ease-in-out;
+}
+
+/* When header collapses (scroll down) */
+.site-header.collapsed {
+  transform: translateY(-230px);
+}
+
+/* Move navbar up to stick to top when header hides */
+.site-header.collapsed + .main-nav {
+  top: 50px;
+}
+
+/* Offset content so it doesn’t hide behind fixed header/nav */
+body {
+  padding-top: 290px; /* header (230) + nav (60) */
+}
 /* small-screen adjustments: stack them and reduce sizes */
 @media (max-width: 720px) {
   .logo {
@@ -270,6 +309,8 @@ html, body {
 /* ===========================
    NAVIGATION BAR
 =========================== */
+
+/*
 .main-nav {
   width: 100%;
   max-width: 100%;
@@ -289,6 +330,24 @@ html, body {
   z-index: 1;
   overflow: visible;
 }
+
+*/
+
+.main-nav {
+  position: fixed;
+  top: 190px; /* matches header height */
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("../img/one-piece-desktop-manga-panels-08t6bf9qk4odjpc8.jpg")
+              rgb(130, 12, 12) 50% / cover no-repeat;
+  transition: top 0.4s ease-in-out;
+}
+
 
 /* overlay darkens background only */
 .main-nav::before {

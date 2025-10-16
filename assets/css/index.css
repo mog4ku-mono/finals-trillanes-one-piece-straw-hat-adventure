@@ -1,57 +1,4 @@
 /* ===========================
-
-   GLOBAL HEADER & NAVIGATION
-
-@font-face {
-  font-family: 'One Piece Font';
-  src: url('../txt/one\ piece\ font.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Reem Kufi Fun';
-  src: url('../txt/ReemKufiFun-Bold.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Reem Kufi Fun Medium';
-  src: url('../txt/ReemKufiFun-Medium.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Reem Kufi Fun Regular';
-  src: url('../txt/ReemKufiFun-Regular.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Reem Kufi Fun SemiBold';
-  src: url('../txt/ReemKufiFun-SemiBold.ttf') format('truetype');
-}
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&family=Reem+Kufi+Fun:wght@700&display=swap');
-
-:root {
-  --red-header: #9d3022;
-  --text-white: #ffffff;
-  --text-yellow: #ffcc33;
-  --nav-font: 'Open Sans Condensed', sans-serif;
-  --title-font: 'OnePiece', serif;
-  --divider-red: #a02c1f;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #000;
-  color: var(--text-white);
-  font-family: var(--nav-font);
-}
-
-
-html, body {
-  min-height: 100%;
-  background: url("../img/gifs/water.gif") center / cover no-repeat fixed;
-  background-color: #000; 
-}
-
-=========================== */
-
-
-/* ===========================
    WATER DIVIDER SECTION
 =========================== */
 /* Make sure navbar and divider connect seamlessly */
@@ -125,6 +72,55 @@ header, nav, .water-divider {
   object-fit: cover;
   display: block;
   flex: 0 0 auto;  /* do not shrink/grow */
+}
+
+/* Scroll item container */
+.scroll-item {
+  position: relative;
+  width: 294px;
+  height: 199px;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+/* Image starts hidden */
+.scroll-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.2s ease, transform 1.5s ease;
+}
+
+/* Red overlay with #ONEPIECE text (now with white manga borders) */
+.scroll-item .overlay {
+  position: absolute;
+  inset: 0;
+  background: #c23a2b;
+  border: 0.5px solid #ffffff;         /* ✅ clean white border like manga panels */
+  box-sizing: border-box;            /* ensures border fits inside dimensions */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 1;
+  transition: opacity 1.2s ease;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* subtle glow for manga paper depth */
+}
+
+/* When fade-in starts */
+.scroll-item.loaded img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.scroll-item.loaded .overlay {
+  opacity: 0;
 }
 
 /* Animations per layer (tweak durations to taste) */
