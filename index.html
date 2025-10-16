@@ -183,8 +183,6 @@
   </p>
 </section>
 
-
-
 <!-- Red divider -->
 <div class="second-red-divider"></div>
 
@@ -193,21 +191,68 @@
   <h2 class="op-flag-title">HOIST YOUR FLAG</h2>
 </section>
 
-  <!-- Sign Up -->
-  <section class="signup">
-    <h3>SIGN UP</h3>
-    <p>Contact us to join the crew or share your thoughts.</p>
-    <form>
-      <input type="text" placeholder="Enter your name" required />
-      <input type="email" placeholder="Enter your email" required />
-      <input type="text" placeholder="Subject" />
-      <textarea placeholder="Message"></textarea>
-      <button type="submit">SUBMIT</button>
-    </form>
-    <p class="note">
-      Your message won’t get lost at sea — the crew will get back to you as soon as the winds allow.
-    </p>
-  </section>
+ <!-- SIGNUP HERO (water left / blue panel right) -->
+<section class="signup-hero">
+  <div class="signup-left water-bg" aria-hidden="true"></div>
+
+  <div class="signup-right">
+    <!-- decorative Luffy line-art sits behind the content -->
+    <div class="signup-right__art" aria-hidden="true"></div>
+
+    <!-- actual content container (form, heading, copy) -->
+    <div class="signup-right__inner">
+      <h2 class="signup-title">SIGN UP</h2>
+      <p class="signup-lead">Contact us to join the crew or share your thoughts.</p>
+
+      <!-- form: structured input groups with floating label & blue tag -->
+      <form class="signup-form" action="#" method="post" novalidate>
+        <div class="form-grid">
+          <!-- Left column -->
+          <div class="col">
+            <div class="input-group">
+              <label>
+                <span class="label-tag">Enter your name</span>
+                <input type="text" name="name" autocomplete="name" />
+              </label>
+            </div>
+
+            <div class="input-group">
+              <label>
+                <span class="label-tag">Enter your email</span>
+                <input type="email" name="email" autocomplete="email" />
+              </label>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div class="col">
+            <div class="input-group">
+              <label>
+                <span class="label-tag small">Subject</span>
+                <input type="text" name="subject" />
+              </label>
+            </div>
+
+            <div class="input-group textarea-group">
+              <label>
+                <span class="label-tag small">Message</span>
+                <textarea name="message" rows="6"></textarea>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row submit-row">
+          <button class="btn-submit" type="submit"><span class="btn-text">SUBMIT</span></button>
+        </div>
+      </form>
+
+      <p class="signup-note">
+        Your message won’t get lost at sea — the crew will get back to you as soon as the winds allow.
+      </p>
+    </div>
+  </div>
+</section>
 
   <!-- Footer -->
   <footer>
