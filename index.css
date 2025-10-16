@@ -473,6 +473,22 @@ body {
 }
 
 /* ===========================
+   NAV TEXT HOVER POP EFFECT
+=========================== */
+.nav-text {
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* On hover: text pops forward and glows a bit */
+.nav-btn:hover .nav-text {
+  color: #FFEA00;
+  transform: scale(1.12);
+  text-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.4),
+    0 0 12px rgba(255, 234, 0, 0.6);
+}
+
+/* ===========================
    WATER DIVIDER SECTION
 =========================== */
 /* Make sure navbar and divider connect seamlessly */
@@ -655,7 +671,7 @@ header, nav, .water-divider {
 /* Title text */
 .op-title {
   position: absolute;
-  top: 70px;
+  top: 120px;
   text-align: center;
   font-family: "Reem Kufi Fun", sans-serif;
   font-weight: 700;
@@ -696,7 +712,7 @@ header, nav, .water-divider {
   width: 100%;
   height: 80px;
   z-index: 5;
-  margin-top: 250px; /* stays fixed regardless of .op-title position */
+  margin-top: 300px; /* stays fixed regardless of .op-title position */
   background: linear-gradient(
     180deg,
     #c6423b 0%,
@@ -950,5 +966,314 @@ header, nav, .water-divider {
   .op-flag-title {
     font-size: 80px;
   }
+}
+
+/* ===========================
+   SIGNUP HERO: WATER + BLUE PANEL
+   (left = water gif with dark filter,
+    right = blue gradient panel with subtle Luffy line-art)
+   =========================== */
+
+.signup-hero {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  gap: 0;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto;
+}
+
+/* remove unwanted space above signup section */
+.signup-hero {
+  margin-top: 0;
+  padding-top: 0;
+  position: relative;
+  top: -60px;
+}
+
+/* if the divider above has a bottom margin, neutralize it */
+.red-divider {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Left column: water gif with dark overlay */
+.signup-left.water-bg {
+  flex: 1 1 auto;
+  min-width: 320px;
+  height: 553px;
+  background: url("assets/img/gifs/water.gif") center / cover no-repeat;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* dark overlay on the gif */
+.signup-left.water-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* Right column: blue gradient */
+.signup-right {
+  width: 838px;
+  height: 553px;
+  flex: 0 0 838px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #020069 0%, #010022 100%);
+  padding: 48px 56px;
+}
+
+/* decorative Luffy line-art */
+.signup-right__art {
+  position: absolute;
+  inset: 0;
+  background-image: url("assets/img/luffy-lineart.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 70% auto;
+  opacity: 0.9;
+  pointer-events: none;
+  filter: contrast(0.9) saturate(0.8);
+  mix-blend-mode: normal;
+  transform: translateX(0%);
+}
+
+/* content wrapper */
+.signup-right__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 720px;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* heading + lead */
+.signup-title {
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffd84a;
+  margin: 0 0 10px 0;
+  letter-spacing: 0.5px;
+}
+
+.signup-lead {
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 22px 0;
+  font-style: normal;
+  line-height: 1.45;
+  font-size: 15px;
+  opacity: 0.95;
+}
+
+/* ==========================================
+   UPDATED FORM (Figma floating-label style)
+   ========================================== */
+
+/* ---------- Signup form grid + alignment ---------- */
+/* Make the form align under the signup-lead text */
+.signup-right__inner {
+  /* keep your existing rules, plus these */
+  padding-left: 24px;      /* nudge content left so inputs align beneath the copy */
+  padding-right: 24px;
+}
+
+/* Two-column layout for the form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* left / right columns */
+  gap: 18px 28px;
+  align-items: start;
+  width: 100%;
+  max-width: 720px;
+  margin-bottom: 18px;
+}
+
+/* column wrapper (keeps structure stable) */
+.form-grid .col { display: flex; flex-direction: column; gap: 16px; }
+
+/* Input group visual container */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Label wraps the tag and the input for easy animation */
+.input-group label {
+  display: block;
+  width: 100%;
+  position: relative;
+  border-radius: 4px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.02);
+  box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  overflow: visible;
+}
+
+/* actual input / textarea styles */
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  font-size: 14px;
+  font-family: "Reddit Sans", sans-serif;
+  resize: none;
+  line-height: 1.3;
+  padding: 0; /* label provides padding */
+}
+
+/* floating "blue tag" that acts like the Figma small label behind text */
+.label-tag {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  display: inline-block;
+  background: #020153;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  transform-origin: left top;
+  transition: transform .22s cubic-bezier(.2,.9,.3,1), top .22s ease, left .22s ease, opacity .18s ease;
+  opacity: 1;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(2,1,40,0.25) inset;
+}
+
+/* smaller tag width variant */
+.label-tag.small { width: auto; padding: 2px 6px; }
+
+/* When field active (focused or non-empty) move the label up and shrink it */
+.input-group.active label { border-color: #ffd84a; box-shadow: 0 6px 18px rgba(255,200,0,0.06); }
+.input-group.active .label-tag {
+  transform: translateY(-22px) scale(.86);
+  left: 8px;
+  top: 6px;
+  opacity: 1;
+}
+
+/* If textarea, keep the tag slightly higher */
+.textarea-group .label-tag { transform-origin: left top; }
+.textarea-group.active .label-tag { transform: translateY(-28px) scale(.86); }
+
+/* Placeholder visible state (when not active, position tag over left) */
+.input-group:not(.active) input::placeholder,
+.input-group:not(.active) textarea::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+/* Caret svg (blinking) — small tick at left inside the input area */
+.caret {
+  width: 10px;
+  height: 15px;
+  flex: 0 0 auto;
+  opacity: 0;                /* hide until input is focused */
+  transition: opacity .18s ease, transform .18s ease;
+  pointer-events: none;
+}
+.input-group.active .caret { opacity: 1; animation: blink 1s steps(1) infinite; transform: translateY(0); }
+
+/* blinking animation */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Focus glow on label/input */
+.input-group:focus-within label {
+  border-color: #ffd84a;
+  box-shadow: 0 10px 30px rgba(255,200,30,0.06);
+}
+
+/* Textarea size and padding — ensure readable */
+.input-group textarea {
+  min-height: 120px;
+  line-height: 1.3;
+  padding: 0;
+}
+
+/* Submit button tweaks: pop & text color change to yellow on hover */
+.btn-submit {
+  background: #020202;
+  border-radius: 4px;
+  width: 166px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.btn-submit .btn-text { color: #fff; font-family: "Reem Kufi Fun", sans-serif; font-size: 20px; }
+.btn-submit:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.5); }
+.btn-submit:hover .btn-text { color: #FFEA00; }
+
+/* Make sure the submit row centers the button */
+.row.submit-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 420px; /* adjust value as needed */
+  margin-top: 8px;
+  gap: 12px;
+}
+
+
+/* Responsive: on narrow screens stack columns into one */
+@media (max-width: 980px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .signup-right__inner { padding-left: 20px; padding-right: 20px; }
+  .row.submit-row { justify-content: center; }
+}
+
+/* Submit button */
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 166px;
+  height: 42px;
+  background: #020202;
+  color: #fff;
+  font-family: "Reem Kufi", sans-serif;
+  font-size: 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.btn-submit:hover {
+  color: #eff800;
+  transform: scale(1.05);
+}
+
+/* Bottom note */
+.signup-note {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
