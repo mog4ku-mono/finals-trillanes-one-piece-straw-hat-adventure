@@ -457,6 +457,9 @@ html, body {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   transition: opacity 0.35s ease, transform 0.35s ease;
   z-index: 1;
+  --oval-offset-x: -12px; /* ← increase/decrease this value */
+  left: var(--oval-offset-x);
+  /* ============================================= */
 }
 
 /* this class is toggled via JS */
@@ -553,6 +556,7 @@ footer::before {
   line-height: normal;
   margin: 0;
 }
+
 
 /* Responsive: stack vertically on small screens */
 @media (max-width: 980px) {
