@@ -1,0 +1,269 @@
+/* ===========================
+   VIDEO SHOWCASE SECTION
+=========================== */
+.video-showcase {
+  position: relative;
+  width: 100%;
+  height: 328px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 40px 0;
+
+  /* Darker overlay with blend mode */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+    url("../img/one-piece-pattern.jpg") center / cover no-repeat;
+  background-color: #a02c1f; /* fallback red tone */
+  background-blend-mode: multiply;
+  
+  z-index: 5;
+}
+
+/* ===========================
+   VIDEO SHOWCASE — ANIMATED VERSION
+=========================== */
+.video-showcase {
+  position: relative;
+  width: 100%;
+  height: 328px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 40px 0;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url("../img/one-piece-pattern.jpg") center / cover no-repeat;
+  background-blend-mode: multiply;
+  background-color: #a02c1f;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Smooth fade-in for videos */
+.video-box {
+  position: relative;
+  border: 3px solid white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 1s ease;
+}
+
+.video-box.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Center play/pause */
+.play-pause-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  opacity: 0;
+  z-index: 3;
+}
+.video-box.local:hover .play-pause-btn {
+  opacity: 1;
+}
+.play-pause-btn svg {
+  width: 48px;
+  height: 48px;
+  fill: #fff;
+  transition: all 0.4s ease-in-out;
+}
+
+/* Volume container (inside video) */
+.volume-container {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 6px 10px;
+  border-radius: 6px;
+  z-index: 3;
+}
+.volume-slider {
+  width: 90px;
+  accent-color: #ffea00;
+  cursor: pointer;
+}
+
+/* ===========================
+   FLOATING WIDGET (bottom right)
+=========================== */
+.video-widget {
+  position: fixed;
+  bottom: 30px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.video-widget.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.video-widget button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 22px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.video-widget button:hover {
+  transform: scale(1.2);
+  color: #ffea00;
+}
+.video-widget input[type="range"] {
+  width: 80px;
+  accent-color: #ffea00;
+}
+
+
+/* wrapper keeps videos horizontal */
+.video-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  flex-wrap: nowrap;
+}
+
+/* Video Box Styles */
+.video-box {
+  position: relative;
+  border: 3px solid white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.18);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.12);
+}
+
+/* YouTube embed size */
+.video-box.youtube iframe {
+  width: 410px;
+  height: 260px;
+  border: none;
+}
+
+/* Local MP4 */
+.video-box.local {
+  width: 410px;
+  height: 260px;
+  display: block;
+  border-radius: 10px;
+}
+
+.video-box.local video {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 374 / 211;
+  display: block;
+  backdrop-filter: blur(2px);
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Play/Pause morph button (hidden by default) */
+.play-pause-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: rgba(0,0,0,0.55);
+  border: none;
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: auto;
+  transition: opacity 0.22s ease, transform 0.22s ease, background 0.2s ease;
+  z-index: 40;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+}
+
+.play-pause-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.play-pause-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: rgba(255,234,0,0.18);
+}
+
+.play-pause-btn svg {
+  width: 36px;
+  height: 36px;
+  fill: #fff;
+  transition: transform 0.25s ease;
+}
+
+/* small fade when button auto-hides */
+.play-pause-btn.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Volume Slider container (right-bottom) */
+.volume-container {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 6px 10px;
+  border-radius: 6px;
+  z-index: 45;
+}
+
+.volume-slider {
+  width: 120px;
+  accent-color: #ffea00;
+  cursor: pointer;
+}
+
+/* Show button while hovering parent */
+.video-box.local:hover .play-pause-btn {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
