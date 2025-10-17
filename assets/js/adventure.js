@@ -40,6 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!video || !playPauseBtn || !volumeSlider || !widget) return;
 
+ // 🔁 Make sure the MP4 loops after ending
+  video.loop = true;  video.loop = true;
+
   // === SVG PATHS for morph animation ===
   const playPath = "M8 5 L19 12 L8 19 Z"; // ▶
   const pausePath = "M6 4 H10 V20 H6 Z M14 4 H18 V20 H14 Z"; // ⏸
@@ -179,4 +182,160 @@ document.addEventListener("DOMContentLoaded", () => {
           .catch(err => console.error("❌ Autoplay failed:", err));
       });
   }, 500); // short delay ensures DOM + media are ready
+});
+
+
+// ===========================
+// FIXED REVEAL ANIMATION FOR CENTERPIECE (Elements visible again)
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
+  const panelSection = document.querySelector(".adventure-panel-bg");
+  const egghead = document.querySelector(".egghead-text");
+  const strawhats = document.querySelector(".strawhats-bg");
+  const luffy = document.querySelector(".luffy-gear5");
+  const watchSection = document.querySelector(".watch-section");
+
+  if (!panelSection || !egghead || !strawhats || !luffy) return;
+
+  function revealCenterpiece() {
+    const rect = panelSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.8) {
+      // Reveal each element with a smooth stagger
+      setTimeout(() => egghead.classList.add("reveal-active"), 0);
+      setTimeout(() => strawhats.classList.add("reveal-active"), 200);
+      setTimeout(() => luffy.classList.add("reveal-active"), 400);
+      window.removeEventListener("scroll", revealCenterpiece);
+    }
+  }
+
+  window.addEventListener("scroll", revealCenterpiece);
+  revealCenterpiece();
+});
+
+
+// ===========================
+// RIGHT-SIDE WATCH SECTION — REVEAL + INTERACTIVITY
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
+  const watchGroup = document.querySelector(".watch-group");
+  const watchSection = document.querySelector(".watch-section");
+  const notifContainer = document.querySelector(".notif-container");
+
+  // === 1️⃣ Reveal Animation on Scroll ===
+  function revealWatchSection() {
+    if (!watchGroup) return;
+    const rect = watchGroup.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.8) {
+      watchSection.classList.add("reveal-active");
+      watchGroup.classList.add("reveal-active");
+      window.removeEventListener("scroll", revealWatchSection);
+    }
+  }
+
+  window.addEventListener("scroll", revealWatchSection);
+  revealWatchSection(); // Check on load
+
+  // === 2️⃣ Streaming Button Redirects ===
+  const streamingLinks = {
+    "crunchyroll-logo": "https://www.crunchyroll.com/series/GRMG8ZQZR/one-piece?srsltid=AfmBOorZlV0LR5F-ZzySopg3ry5x1iKdKbieuG2cc-Jvs7uTW_kUcMd-",
+    "netflix-logo": "https://www.netflix.com/ph-en/title/80107103/",
+    "hulu-logo": "https://www.hulu.com/series/one-piece-f5d4278b-6acb-4a63-a7a2-eab91de2611e",
+    "funimation-logo": "https://x.com/funimation?lang=en",
+    "disneyplus-logo": "https://www.apps.disneyplus.com/ph/onboarding?ref=%2Fen-jp%2Fbrowse%2Fentity-cdb8e29b-7fb0-4142-9966-3b1125246df0",
+    "youtube-logo": "https://www.youtube.com/@OnePieceOfficial",
+  };
+
+  Object.entries(streamingLinks).forEach(([className, url]) => {
+    const btn = document.querySelector(`.${className}`);
+    if (btn) {
+      btn.style.cursor = "pointer";
+      btn.addEventListener("click", () => {
+        window.open(url, "_blank"); // ✅ opens new tab
+      });
+    }
+  });
+
+  // === 3️⃣ Notification Click Prompt ===
+  if (notifContainer) {
+    notifContainer.addEventListener("click", () => {
+      // Create a temporary floating message
+      const popup = document.createElement("div");
+      popup.textContent = "✅ Notifications enabled! You’ll get the latest One Piece arc updates.";
+      popup.style.position = "fixed";
+      popup.style.bottom = "40px";
+      popup.style.right = "40px";
+      popup.style.padding = "12px 18px";
+      popup.style.background = "rgba(0,0,0,0.85)";
+      popup.style.color = "#fff";
+      popup.style.fontFamily = "Reem Kufi Fun, sans-serif";
+      popup.style.fontSize = "14px";
+      popup.style.borderRadius = "8px";
+      popup.style.boxShadow = "0 4px 10px rgba(0,0,0,0.4)";
+      popup.style.zIndex = "9999";
+      popup.style.opacity = "0";
+      popup.style.transition = "opacity 0.4s ease";
+
+      document.body.appendChild(popup);
+
+      // Fade in, wait, fade out, then remove
+      requestAnimationFrame(() => {
+        popup.style.opacity = "1";
+      });
+      setTimeout(() => {
+        popup.style.opacity = "0";
+        setTimeout(() => popup.remove(), 500);
+      }, 2800);
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const divider = document.querySelector(".water-divider-arcs");
+  if (!divider) {
+    console.warn("[divider] .water-divider-arcs element not found. Check HTML class name or duplicate elements.");
+    return;
+  }
+
+  // helper to add reveal safely (makes sure class isn't added twice)
+  function revealDivider() {
+    if (!divider.classList.contains("reveal")) {
+      console.log("[divider] reveal triggered");
+      divider.classList.add("reveal");
+    }
+  }
+
+  // IntersectionObserver path (preferred)
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        console.log("[divider] IO entry:", entry.isIntersecting, "intersectionRatio:", entry.intersectionRatio);
+        if (entry.isIntersecting) {
+          revealDivider();
+          obs.unobserve(entry.target); // only once
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+    observer.observe(divider);
+
+    // immediate fallback if already visible (dev mode / above the fold)
+    const rect = divider.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      console.log("[divider] already in view on load — revealing immediately");
+      revealDivider();
+      observer.unobserve(divider);
+    }
+  } else {
+    // fallback: on scroll / timeout
+    console.warn("[divider] IntersectionObserver not supported — using scroll fallback");
+    const onScroll = () => {
+      const r = divider.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9) {
+        revealDivider();
+        window.removeEventListener("scroll", onScroll);
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+    setTimeout(onScroll, 250);
+  }
 });
