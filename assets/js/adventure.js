@@ -255,38 +255,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+
   // === 3️⃣ Notification Click Prompt ===
-  if (notifContainer) {
+    if (notifContainer) {
     notifContainer.addEventListener("click", () => {
-      // Create a temporary floating message
-      const popup = document.createElement("div");
-      popup.textContent = "✅ Notifications enabled! You’ll get the latest One Piece arc updates.";
-      popup.style.position = "fixed";
-      popup.style.bottom = "40px";
-      popup.style.right = "40px";
-      popup.style.padding = "12px 18px";
-      popup.style.background = "rgba(0,0,0,0.85)";
-      popup.style.color = "#fff";
-      popup.style.fontFamily = "Reem Kufi Fun, sans-serif";
-      popup.style.fontSize = "14px";
-      popup.style.borderRadius = "8px";
-      popup.style.boxShadow = "0 4px 10px rgba(0,0,0,0.4)";
-      popup.style.zIndex = "9999";
-      popup.style.opacity = "0";
-      popup.style.transition = "opacity 0.4s ease";
+        // Create a temporary floating message
+        const popup = document.createElement("div");
+        popup.textContent = "✅ Notifications enabled! You’ll get the latest One Piece arc updates.";
+        popup.style.position = "fixed";
+        popup.style.top = "40px";          // ⬆️ Moved from bottom to top
+        popup.style.right = "40px";        // stays on the right
+        popup.style.padding = "12px 18px";
+        popup.style.background = "rgba(0,0,0,0.85)";
+        popup.style.color = "#fff";
+        popup.style.fontFamily = "Reem Kufi Fun, sans-serif";
+        popup.style.fontSize = "14px";
+        popup.style.borderRadius = "8px";
+        popup.style.boxShadow = "0 4px 10px rgba(0,0,0,0.4)";
+        popup.style.zIndex = "9999";
+        popup.style.opacity = "0";
+        popup.style.transition = "opacity 0.4s ease";
 
-      document.body.appendChild(popup);
+        document.body.appendChild(popup);
 
-      // Fade in, wait, fade out, then remove
-      requestAnimationFrame(() => {
+        // Fade in, wait, fade out, then remove
+        requestAnimationFrame(() => {
         popup.style.opacity = "1";
-      });
-      setTimeout(() => {
+        });
+        setTimeout(() => {
         popup.style.opacity = "0";
         setTimeout(() => popup.remove(), 500);
-      }, 2800);
+        }, 2800);
     });
-  }
+    }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -338,4 +339,126 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", onScroll);
     setTimeout(onScroll, 250);
   }
+});
+
+// ===========================
+// ARC TEXT REVEAL ON SCROLL
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
+  const arcs = document.querySelectorAll(".arc");
+
+  // Observe when each arc scrolls into view
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal"); // trigger text animation
+          observer.unobserve(entry.target); // only once per arc
+        }
+      });
+    },
+    {
+      threshold: 0.5, // reveal when 20% visible
+    }
+  );
+
+  arcs.forEach(arc => observer.observe(arc));
+});
+
+
+// ===========================
+// ARC JUMP WIDGET (custom) — append to adventure.js
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
+  const widget = document.querySelector(".arc-jump-widget");
+  const toggle = widget?.querySelector(".arc-jump-toggle");
+  const list = widget?.querySelector(".arc-jump-list");
+  const items = list ? Array.from(list.querySelectorAll("li")) : [];
+
+  if (!widget || !toggle || !list) return;
+
+  // show widget after a short delay (same pattern used elsewhere)
+  setTimeout(() => widget.classList.add("show"), 650);
+
+  // allow open on click/tap
+  toggle.addEventListener("click", (e) => {
+    const isOpen = widget.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    // move focus into first item when opened
+    if (isOpen && items.length) items[0].focus();
+  });
+
+  // keyboard: close on ESC, navigate with arrows and Enter
+  widget.addEventListener("keydown", (e) => {
+    const open = widget.classList.contains("open");
+    if (!open) {
+      if (e.key === "ArrowDown") {
+        widget.classList.add("open");
+        toggle.setAttribute("aria-expanded", "true");
+        e.preventDefault();
+      }
+      return;
+    }
+
+    const active = document.activeElement;
+    const idx = items.indexOf(active);
+    if (e.key === "Escape") {
+      widget.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.focus();
+    } else if (e.key === "ArrowDown") {
+      const next = items[Math.min(items.length - 1, Math.max(0, idx + 1))] || items[0];
+      next.focus();
+      e.preventDefault();
+    } else if (e.key === "ArrowUp") {
+      const prev = items[Math.max(0, (idx - 1))] || items[items.length - 1];
+      prev.focus();
+      e.preventDefault();
+    } else if (e.key === "Enter" && active && active.matches("li")) {
+      active.click();
+      e.preventDefault();
+    }
+  });
+
+  // click an item: smooth scroll
+  items.forEach(li => {
+    li.tabIndex = 0; // make focusable
+    li.addEventListener("click", (e) => {
+      const targetId = li.dataset.target;
+      if (!targetId) return;
+      const el = document.getElementById(targetId);
+      if (!el) {
+        console.warn("Arc not found:", targetId);
+        return;
+      }
+
+      // close widget for clarity
+      widget.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+
+      // compute offset (adjust headerOffset if you have a fixed header)
+      const headerOffset = 24;
+      const rect = el.getBoundingClientRect();
+      const targetY = window.pageYOffset + rect.top - headerOffset;
+
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth"
+      });
+
+      // brief highlight so user sees landing spot
+      el.classList.add("arc-jump-highlight");
+      setTimeout(() => el.classList.remove("arc-jump-highlight"), 1200);
+    });
+  });
+
+  // Close when clicking outside widget
+  document.addEventListener("click", (e) => {
+    if (!widget.contains(e.target) && widget.classList.contains("open")) {
+      widget.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  // optional: show on hover (already handled by CSS .arc-jump-widget:hover opening the list)
 });

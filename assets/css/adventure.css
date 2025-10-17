@@ -695,3 +695,297 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ===========================
+   ARC LIST — ONE PIECE ARCS
+=========================== */
+.arcs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #111;
+  background: url("../img/water-bg.gif") center / cover no-repeat;
+  padding: 0;
+}
+
+/* Each arc section */
+.arc {
+  position: relative;
+  width: 100%;
+  height: 600px; /* Bigger for a more cinematic feel */
+  overflow: hidden;
+}
+
+/* Arc background image */
+.arc-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.8);
+  transition: transform 0.6s ease;
+}
+
+.arc:hover .arc-image {
+  transform: scale(1.05);
+}
+
+/* Black gradient overlay that fades upward */
+.arc-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 60px;
+  box-sizing: border-box;
+}
+
+/* Arc title */
+.arc-title {
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #FFBD30 0%, #F2FF62 70%, #DFD80F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  margin: 0 0 10px 0;
+}
+
+/* Arc description */
+.arc-desc {
+  color: #FFFEFB;
+  font-family: "Reddit Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 1000px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 1024px) {
+  .arc {
+    height: 480px;
+  }
+
+  .arc-info {
+    height: 55%;
+    padding: 30px 40px;
+  }
+
+  .arc-title {
+    font-size: 48px;
+  }
+
+  .arc-desc {
+    font-size: 20px;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .arc {
+    height: 400px;
+  }
+
+  .arc-info {
+    height: 60%;
+    padding: 24px 30px;
+  }
+
+  .arc-title {
+    font-size: 36px;
+  }
+
+  .arc-desc {
+    font-size: 18px;
+  }
+}
+
+
+/* ===========================
+   ARC JUMP WIDGET (Bottom-left reveal + slide-up on hover)
+=========================== */
+/* Add invisible hover area to prevent flicker between button and list */
+.arc-jump-widget::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: 12px; /* invisible buffer space */
+  background: transparent;
+}
+
+.arc-jump-widget {
+  position: fixed;
+  left: 20px;
+  bottom: 28px;
+  z-index: 1600;
+  width: 260px;
+  border-radius: 10px;
+  padding: 8px;
+  box-sizing: border-box;
+  transform: translateY(18px);
+  opacity: 0;
+  transition: transform 420ms cubic-bezier(.22,.9,.2,1), opacity 420ms ease;
+  pointer-events: auto;
+}
+
+/* show when JS adds .show */
+.arc-jump-widget.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Main toggle button */
+.arc-jump-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.85), rgba(30,30,30,0.9));
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-weight: 700;
+  letter-spacing: .2px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  transition: background 0.25s ease;
+}
+
+.arc-jump-toggle:hover {
+  background: linear-gradient(180deg, rgba(0,0,0,0.9), rgba(40,40,40,0.95));
+}
+
+.arc-jump-toggle .chev {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Dropdown list (slides upward) */
+.arc-jump-list {
+  position: absolute;
+  bottom: 100%; /* position above the toggle */
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(40,40,40,0.95));
+  border-radius: 8px;
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid rgba(200,200,200,0.06);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+/* Slide-up animation when hovering */
+.arc-jump-widget:hover .arc-jump-list,
+.arc-jump-widget.open .arc-jump-list {
+  opacity: 1;
+  transform: translateY(-6px);
+  pointer-events: auto;
+}
+
+/* Each item fade-up */
+.arc-jump-list li {
+  padding: 10px 12px;
+  color: #ffffff;
+  border-radius: 6px;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-family: "Reddit Sans", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.25s ease, transform 0.25s ease;
+
+  opacity: 0;
+  transform: translateY(8px);
+  animation: arcItemFade 0.35s ease forwards;
+}
+
+/* Staggered fade animation (keeps same behavior) */
+.arc-jump-widget:hover .arc-jump-list li,
+.arc-jump-widget.open .arc-jump-list li {
+  animation-delay: calc(var(--i, 0) * 0.04s);
+}
+
+/* Fade-up keyframes */
+@keyframes arcItemFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover states */
+.arc-jump-list li:hover,
+.arc-jump-list li:focus {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  outline: none;
+  color: #fff;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .arc-jump-widget { left: 12px; bottom: 16px; width: 200px; }
+  .arc-jump-list { max-height: 220px; }
+}
+
+/* Highlight effect when jumping */
+.arc-jump-highlight {
+  box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.08), 0 10px 30px rgba(0,0,0,0.5);
+  transition: box-shadow 420ms ease;
+}
+
+/* ===========================
+   ARC TEXT REVEAL ANIMATION
+=========================== */
+
+/* default hidden state (before reveal) */
+.arc .arc-title,
+.arc .arc-desc {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+}
+
+/* when the arc enters view */
+.arc.reveal .arc-title,
+.arc.reveal .arc-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* staggered effect: title first, then description */
+.arc .arc-title {
+  transition-delay: 0.1s;
+}
+
+.arc .arc-desc {
+  transition-delay: 0.3s;
+}
+
