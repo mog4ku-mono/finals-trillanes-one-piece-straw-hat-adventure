@@ -57,3 +57,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// ===========================
+// ONE PIECE-THEMED SUCCESS PROMPT ON SUBMIT
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector(".signup-form");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Create prompt element
+    const prompt = document.createElement("div");
+    prompt.className = "op-prompt";
+    prompt.innerHTML = `
+      <img src="assets/img/straw-hat-logo.png" alt="Straw Hat Logo" class="op-logo">
+      <span class="msg">Message sent! The Straw Hats have received your letter!</span>
+    `;
+
+    document.body.appendChild(prompt);
+
+    // Trigger animation
+    requestAnimationFrame(() => prompt.classList.add("show"));
+
+    // Remove after a delay
+    setTimeout(() => {
+      prompt.classList.remove("show");
+      setTimeout(() => prompt.remove(), 800);
+    }, 4000);
+  });
+});

@@ -837,3 +837,52 @@ header, nav, .water-divider {
   line-height: 1.5;
 }
 
+/* ===========================
+   ONE PIECE THEMED PROMPT
+=========================== */
+.op-prompt {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(180deg, #f7e3b4 0%, #e8cc91 100%);
+  background-blend-mode: multiply;
+  color: #3b2400;
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid #5c3b1a;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(-20px);
+  opacity: 0;
+  z-index: 2000;
+  transition: all 0.5s ease;
+}
+
+.op-prompt.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Straw Hat Logo inside prompt */
+.op-prompt .op-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+  transform: rotate(-3deg);
+}
+
+.op-prompt .msg {
+  color: #3b2400;
+}
+
+/* fade-out animation */
+.op-prompt.hide {
+  opacity: 0;
+  transform: translateY(-20px);
+}
