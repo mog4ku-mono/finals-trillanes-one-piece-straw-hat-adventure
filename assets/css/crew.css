@@ -213,24 +213,6 @@
   z-index: 8;
 }
 
-/* ---------- Color Themes ---------- */
-.luffy-text {
-  background: none;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  z-index: 8;
-}
-.luffy-color {
-  background: none;
-}
-
-/* ---------- ZORO COLOR THEME ---------- */
-.zoro-text {
-  background: none;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 
 
 /* ====== Reveal & Slide Animations (append to end of crew.css) ====== */
