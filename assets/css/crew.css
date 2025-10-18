@@ -1,0 +1,235 @@
+/* ---------- Layout ---------- */
+.crew-section {
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Faded BG Text */
+.crew-bg-title {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  font-family: "ONE PIECE";
+  font-size: 550px;
+  background: linear-gradient(358deg, rgba(239,239,239,0) 1.32%, #efefef 98.68%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.4;
+  letter-spacing: -27.5px;
+  z-index: 1;
+  user-select: none;
+}
+
+/* Slide Container */
+.crew-slide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  z-index: 2;
+}
+
+/* ---------- Left Info ---------- */
+.crew-info {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.crew-foreground-title {
+  position: absolute;      /* remove from flow */
+  top: 6%;                 /* tweak vertical placement (use % so it's responsive) */
+  left: 4.5%;                /* tweak horizontal placement */
+  z-index: 30;
+  font-family: "ONE PIECE";
+  font-size: 48px;         /* adjust to taste (was 30 previously, increase for desktop) */
+  letter-spacing: 0;
+  background: linear-gradient(90deg, #f00 0%, #900 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;               /* remove previous margin-based nudges */
+  transform: translateY(0);/* use transform if you want to nudge without affecting flow */
+  pointer-events: none;    /* so it doesn't block clicks */
+}
+
+.crew-label {
+  font-family: "Reddit Sans";
+  font-size: 16px;
+  color: #a1a1a1;
+  margin-bottom: -60px;
+}
+.crew-label strong {
+  color: #090909;
+  font-weight: 600;
+}
+
+.crew-name {
+  font-family: "Reem Kufi Fun";
+  font-size: 50px;
+  background: linear-gradient(90deg, #d61919 0%, #bc3b00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: -40px;
+}
+
+.crew-desc {
+  font-family: "Reddit Sans";
+  font-size: 18px;
+  color: #373737;
+  width: 454px;
+  line-height: 1.4;
+  letter-spacing: -1px;
+  margin-bottom: -60px;
+}
+
+/* Social Icons */
+.crew-socials {
+  display: flex;
+  gap: 60px;
+  margin-top: 60px;
+}
+.crew-socials img {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) saturate(100%) invert(21%) sepia(78%) saturate(3700%) hue-rotate(345deg) brightness(92%) contrast(94%);
+  transition: transform 0.3s ease;
+}
+.crew-socials img:hover {
+  transform: scale(1.2);
+}
+
+/* ---------- Right Visuals ---------- */
+.crew-visual {
+  position: relative;
+  width: 50%;
+  height: 900px;
+  overflow: visible; /* allow the character to show beyond container */
+}
+
+.crew-bg-rhombus {
+  position: absolute;
+  top: 0;
+  right: -45%;
+  width: 1056px;
+  height: 885px;
+  clip-path: polygon(25% 0, 100% 0, 75% 100%, 0 100%);
+  overflow: hidden;
+  filter: brightness(0.7);
+}
+
+.crew-bg-rhombus img {
+  width: 100%;
+  height: 100%;
+  right: 20%;
+}
+
+.crew-color-rhombus {
+  position: absolute;
+  right: -90%;
+  top: 0;
+  width: 752px;
+  height: 885px;
+  clip-path: polygon(35% 0, 80% 0, 100% 100%, 0 100%);
+  z-index: 6;
+
+  /* === COMBINED COLOR + FADE SHADOW === */
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.25) 0%,    /* dark gray edge (acts like shadow) */
+    rgba(0, 0, 0, 0.15) 8%,    /* smooth fade */
+    rgba(0, 0, 0, 0.05) 18%,   /* lighter shadow fade */
+    var(--rhombus-color, #d93831) 45%  /* main rhombus color (replace with your luffy color) */
+  );
+
+  /* Optional: smoother edges */
+  filter: brightness(0.98) contrast(1.05);
+}
+
+
+/* Character Image */
+.crew-character {
+  position: absolute;
+  top: 70px;
+  right: -32%;
+  width: 880px;
+  height: 900px;
+  transform: rotate(1.1deg);
+  z-index: 5;
+}
+
+/* ---------- Navigation ---------- */
+.crew-nav {
+  position: absolute;
+  bottom: 5%;
+  left: 43%;
+  display: flex;
+  gap: 515px;
+  transform: translateX(-50%);
+  transform: translateY(-90%);
+  z-index: 20;
+}
+.crew-nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 125px;
+  height: 48px;
+}
+.crew-nav .arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ---------- Progress Bars ---------- */
+.crew-progress {
+  position: absolute;
+  right: 1%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 8;
+}
+.progress-bar {
+  width: 20px;
+  height: 5px;
+  background: rgba(255,255,255,0.5);
+  transition: all 0.3s ease;
+}
+.progress-bar.active {
+  width: 35px;
+  background: #fff;
+  z-index: 8;
+}
+
+/* ---------- Color Themes ---------- */
+.luffy-text {
+  background: none;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: 8;
+}
+.luffy-color {
+  background: none;
+}
+
+/* ---------- ZORO COLOR THEME ---------- */
+.zoro-text {
+  background: none;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+
