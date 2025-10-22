@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // find all inputs/textareas inside the signup form
   const groups = document.querySelectorAll(".signup-form .input-group");
 
-  // If you used the HTML above, each .input-group's <label> contains the input/textarea.
+
   groups.forEach((group) => {
     const input = group.querySelector("input, textarea");
     if (!input) return;
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const overlay = item.querySelector(".overlay");
 
     // Staggered delay so they don't all fade at once
-    const delay = index * 120; // 150ms between each
+    const delay = index * 120; 
 
     // Once image is loaded
     img.addEventListener("load", () => {
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // Create prompt element
+  
     const prompt = document.createElement("div");
     prompt.className = "op-prompt";
     prompt.innerHTML = `
@@ -88,3 +88,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 4000);
   });
 });
+

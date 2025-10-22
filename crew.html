@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Straw Hat Adventure</title>
   <link rel="icon" type="image/png" href="assets/img/logo.png">
-  <link rel="stylesheet" href="assets/css/global.css">
-  <link rel="stylesheet" href="assets/css/crew.css">
-  <link rel="stylesheet" href="assets/css/index.css">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/crew.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
   <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -62,6 +62,13 @@
     <div class="rope rope-2"></div>
     <div class="rope rope-3"></div>
   </div>
+
+  <!-- Mobile Hamburger Menu (Right-Side Button) -->
+  <button class="mobile-hamburger" aria-label="Menu Toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </header>
 
 
@@ -97,6 +104,44 @@
         <span class="icon-circle">
           <img src="assets/img/thousand-sunny-header.png" alt="Factions Icon">
         </span>
+        <span class="nav-text">Factions</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Sidebar Menu (slides in from left) -->
+<nav class="mobile-sidebar">
+  <ul>
+    <li>
+      <a href="index.html" class="nav-btn">
+        <div class="icon-circle">
+          <img src="assets/img/tavern.png" alt="Home Icon">
+        </div>
+        <span class="nav-text">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="adventure.html" class="nav-btn">
+        <div class="icon-circle">
+          <img src="assets/img/adventure-header.png" alt="Adventure Icon">
+        </div>
+        <span class="nav-text">Adventure</span>
+      </a>
+    </li>
+    <li>
+      <a href="crew.html" class="nav-btn">
+        <div class="icon-circle">
+          <img src="assets/img/straw-hat-logo.png" alt="Crew Icon">
+        </div>
+        <span class="nav-text">Crew</span>
+      </a>
+    </li>
+    <li>
+      <a href="factions.html" class="nav-btn">
+        <div class="icon-circle">
+          <img src="assets/img/thousand-sunny-header.png" alt="Factions Icon">
+        </div>
         <span class="nav-text">Factions</span>
       </a>
     </li>
@@ -166,7 +211,8 @@
   </footer>
 
 
-  <script src="assets/js/global.js"></script>
-  <script src="assets/js/crew.js"></script>
+  <script src="../assets/js/global.js"></script>
+  <script src="../assets/js/crew.js"></script>
+  
 </body>
 </html>

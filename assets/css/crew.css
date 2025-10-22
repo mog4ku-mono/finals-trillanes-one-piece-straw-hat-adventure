@@ -43,19 +43,19 @@
 }
 
 .crew-foreground-title {
-  position: absolute;      /* remove from flow */
-  top: 6%;                 /* tweak vertical placement (use % so it's responsive) */
-  left: 4.5%;                /* tweak horizontal placement */
+  position: absolute;      
+  top: 6%;                 
+  left: 4.5%;                
   z-index: 30;
   font-family: "ONE PIECE";
-  font-size: 48px;         /* adjust to taste (was 30 previously, increase for desktop) */
+  font-size: 48px;         
   letter-spacing: 0;
   background: linear-gradient(90deg, #f00 0%, #900 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0;               /* remove previous margin-based nudges */
-  transform: translateY(0);/* use transform if you want to nudge without affecting flow */
-  pointer-events: none;    /* so it doesn't block clicks */
+  margin: 0;               
+  transform: translateY(0);
+  pointer-events: none;    
 }
 
 .crew-label {
@@ -145,7 +145,7 @@
     rgba(0, 0, 0, 0.25) 0%,    /* dark gray edge (acts like shadow) */
     rgba(0, 0, 0, 0.15) 8%,    /* smooth fade */
     rgba(0, 0, 0, 0.05) 18%,   /* lighter shadow fade */
-    var(--rhombus-color, #d93831) 45%  /* main rhombus color (replace with your luffy color) */
+    var(--rhombus-color, #d93831) 45%  /* main rhombus color */
   );
 
   /* Optional: smoother edges */
@@ -328,4 +328,133 @@
 .social-wrap:hover {
   transform: scale(1.15);
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+}
+
+/* =====================================================
+   RESPONSIVE FIX — TABLET & MOBILE (CREW SECTION)
+===================================================== */
+
+/* Tablet (1024px and below) */
+@media (max-width: 1024px) {
+  .crew-section {
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+    padding: 80px 0 120px;
+  }
+
+  .crew-slide {
+    flex-direction: column;
+    width: 95%;
+  }
+
+  .crew-info {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .crew-foreground-title {
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 40px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #f00 0%, #900 100%);
+  }
+
+  .crew-name {
+    font-size: 42px;
+  }
+
+  .crew-desc {
+    width: 90%;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .crew-socials {
+    justify-content: center;
+    margin-top: 20px;
+    gap: 30px;
+  }
+
+  .crew-visual {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 60px;
+  }
+
+  .crew-bg-rhombus,
+  .crew-color-rhombus {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    right: 0;
+    clip-path: none;
+  }
+
+  .crew-bg-rhombus img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .crew-character {
+    position: relative;
+    width: 800px;
+    height: 400;
+    right: 0;
+    top: -80px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .crew-nav {
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 120px;
+  }
+
+  .crew-progress {
+    display: none;
+  }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+  .crew-section {
+    padding: 40px 0 120px;
+  }
+
+  .crew-foreground-title {
+    font-size: 30px;
+  }
+
+  .crew-name {
+    font-size: 40px;
+  }
+
+  .crew-desc {
+    font-size: 14px;
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .crew-character {
+    width: 510px;
+    top: -300px;
+  }
+
+  .crew-socials {
+    gap: 24px;
+  }
+
+  .crew-nav {
+    bottom: 80px;
+    gap: 100px;
+  }
 }

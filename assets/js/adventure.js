@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ===========================
-// ARC JUMP WIDGET (custom) — append to adventure.js
+// ARC JUMP WIDGET (custom) 
 // ===========================
 document.addEventListener("DOMContentLoaded", () => {
   const widget = document.querySelector(".arc-jump-widget");
@@ -462,3 +462,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // optional: show on hover (already handled by CSS .arc-jump-widget:hover opening the list)
 });
+
+// Ensure main-nav top is updated when header collapses (works regardless of sibling order)
+(function() {
+  const header = document.querySelector('.site-header');
+  const mainNav = document.querySelector('.main-nav');
+  if (!header || !mainNav) return;
+
+  function updateNavOnHeaderState() {
+    if (header.classList.contains('collapsed')) {
+      mainNav.style.top = '50px';
+    } else {
+      mainNav.style.top = ''; // let CSS decide (falls back to default)
+    }
+  }
+
+  // run on load & whenever header class toggles
+  document.addEventListener('DOMContentLoaded', updateNavOnHeaderState);
+  // watch for scroll changes which toggle class
+  window.addEventListener('scroll', updateNavOnHeaderState);
+})();

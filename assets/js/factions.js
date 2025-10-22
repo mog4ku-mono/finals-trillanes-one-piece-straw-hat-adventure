@@ -121,3 +121,4 @@ document.addEventListener("DOMContentLoaded", () => {
     fadeBackground(slides[currentIndex]);
   }, 300);
 });
+

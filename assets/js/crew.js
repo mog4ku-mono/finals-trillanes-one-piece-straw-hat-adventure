@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   const progressDots = document.querySelectorAll(".progress-bar");
 
-  // --- Replace social <img> with gradient-masked link wrappers ---
+
   const placeholderLinks = [
     "https://www.instagram.com/onepiece_staff/",
     "https://twitter.com/OnePieceAnime",
@@ -192,3 +192,4 @@ document.addEventListener("DOMContentLoaded", () => {
   prevBtn.addEventListener("click", prevSlide);
   updateSlide();
 });
+

@@ -61,8 +61,6 @@ window.addEventListener("scroll", () => {
 // ===========================
 // MULTI-LAYER SCROLL DUPLICATION FIX
 // ===========================
-// This ensures each .scroll-track repeats enough times
-// so it seamlessly loops across all screen sizes
 document.addEventListener("DOMContentLoaded", () => {
   const scrollTracks = document.querySelectorAll(".scroll-track");
 
@@ -76,10 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Optional: re-check on window resize (responsive behavior)
+  
   window.addEventListener("resize", () => {
     scrollTracks.forEach(track => {
-      // Only run if the track somehow became shorter than needed
       if (track.scrollWidth < window.innerWidth * 2.2) {
         track.innerHTML += track.innerHTML;
       }
@@ -137,3 +134,109 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
+// ------------ Mobile sidebar toggle (final layered fix) ------------
+document.addEventListener('DOMContentLoaded', () => {
+  const hamburger = document.querySelector('.mobile-hamburger');
+  const sidebar = document.querySelector('.mobile-sidebar');
+
+  if (!hamburger || !sidebar) return;
+
+  const isMobile = () => window.innerWidth <= 720;
+
+  const openSidebar = () => {
+    hamburger.classList.add('active');
+    sidebar.classList.add('active');
+    document.body.classList.add('sidebar-open');
+  };
+
+  const closeSidebar = () => {
+    hamburger.classList.remove('active');
+    sidebar.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+  };
+
+  const toggleSidebar = () => {
+    if (!isMobile()) return;
+    sidebar.classList.contains('active') ? closeSidebar() : openSidebar();
+  };
+
+  hamburger.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleSidebar();
+  });
+
+  // Close sidebar when link is clicked
+  sidebar.addEventListener('click', (e) => {
+    if (!isMobile()) return;
+    if (e.target.closest('a')) closeSidebar();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('active') && isMobile()) {
+      closeSidebar();
+    }
+  });
+
+  // Auto close if resized to desktop
+  window.addEventListener('resize', () => {
+    if (!isMobile() && sidebar.classList.contains('active')) closeSidebar();
+  });
+});
+
+// Move hamburger into .main-nav on mobile so it stays attached to the manga panel
+(function() {
+  const hamburger = document.querySelector('.mobile-hamburger');
+  const mainNav = document.querySelector('.main-nav');
+  const siteHeader = document.querySelector('.site-header');
+  if (!hamburger || !mainNav || !siteHeader) return;
+
+  const isMobile = () => window.innerWidth <= 720;
+
+  // store original parent so we can move it back
+  const originalParent = hamburger.parentElement;
+  const originalNext = hamburger.nextElementSibling;
+
+  function attachToNav() {
+    // only move if not already child of mainNav
+    if (hamburger.parentElement !== mainNav) {
+      mainNav.insertBefore(hamburger, mainNav.firstChild);
+    }
+    // make sure classes/state are preserved
+  }
+
+  function attachToHeader() {
+    // move back into original place in header
+    if (hamburger.parentElement !== originalParent) {
+      if (originalNext) originalParent.insertBefore(hamburger, originalNext);
+      else originalParent.appendChild(hamburger);
+    }
+  }
+
+  // run on load and resize
+  function updatePlacement() {
+    if (isMobile()) attachToNav();
+    else attachToHeader();
+  }
+
+  window.addEventListener('resize', updatePlacement);
+  document.addEventListener('DOMContentLoaded', updatePlacement);
+  // also run once now
+  updatePlacement();
+})();
+
+// Close mobile sidebar automatically when a nav link is clicked
+document.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.querySelector('.mobile-sidebar');
+  const hamburger = document.querySelector('.mobile-hamburger');
+  const links = document.querySelectorAll('.mobile-sidebar a.nav-btn');
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      hamburger.classList.remove('active');
+      document.body.classList.remove('sidebar-open');
+    });
+  });
+});

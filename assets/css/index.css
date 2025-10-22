@@ -1,7 +1,6 @@
 /* ===========================
    WATER DIVIDER SECTION
 =========================== */
-/* Make sure navbar and divider connect seamlessly */
 .main-nav {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -17,7 +16,7 @@
   display: block;
 }
 
-/* Remove possible default spacing from elements */
+
 header, nav, .water-divider {
   display: block;
   margin: 0;
@@ -31,7 +30,6 @@ header, nav, .water-divider {
 .op-banner {
   position: relative;
   overflow: hidden;
-  /* height = 3 rows * 199px (per your layout spec) */
   height: calc(199px * 3); /* 597px */
   width: 100%;
   max-width: 100%;
@@ -42,10 +40,9 @@ header, nav, .water-divider {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 33.3333%; /* one third of op-banner */
+  height: 33.3333%; 
   overflow: hidden;
   display: block;
-  /* ensure pointer events pass through if you want clicks to hit content below */
   pointer-events: none;
 }
 
@@ -59,19 +56,16 @@ header, nav, .water-divider {
   display: flex;
   align-items: stretch;
   height: 100%;
-  /* Make the track wide enough by letting its content determine width.
-     We rely on duplicated images in your HTML so the second half forms the seamless loop. */
   width: max-content;
   will-change: transform;
 }
 
-/* images should match your Figma dimensions */
 .scroll-track img {
-  width: 294px;    /* per spec */
-  height: 199px;   /* per spec */
+  width: 294px;    
+  height: 199px;   
   object-fit: cover;
   display: block;
-  flex: 0 0 auto;  /* do not shrink/grow */
+  flex: 0 0 auto;  
 }
 
 /* Scroll item container */
@@ -98,8 +92,8 @@ header, nav, .water-divider {
   position: absolute;
   inset: 0;
   background: #c23a2b;
-  border: 0.5px solid #ffffff;         /* ✅ clean white border like manga panels */
-  box-sizing: border-box;            /* ensures border fits inside dimensions */
+  border: 0.5px solid #ffffff;         
+  box-sizing: border-box;           
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,7 +104,7 @@ header, nav, .water-divider {
   text-transform: uppercase;
   opacity: 1;
   transition: opacity 1.2s ease;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); /* subtle glow for manga paper depth */
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2); 
 }
 
 /* When fade-in starts */
@@ -123,7 +117,7 @@ header, nav, .water-divider {
   opacity: 0;
 }
 
-/* Animations per layer (tweak durations to taste) */
+/* Animations per layer */
 .op-scroll1 .scroll-track {
   animation: scroll-left-1 68s linear infinite;
 }
@@ -157,7 +151,7 @@ header, nav, .water-divider {
   box-sizing: border-box;
 }
 
-/* If you want the GIF frames to align flush to the left edge of the container: */
+
 .op-banner .scroll-track:first-child img:first-child {
   margin-left: 0;
 }
@@ -248,13 +242,13 @@ header, nav, .water-divider {
   z-index: 10;
   overflow: visible;
 
-  /* ✨ Fade + rise effect */
+  /*  Fade + rise effect */
   opacity: 0;
   transform: translateY(40px);
   animation: fadeRise 1.6s ease-out 0.3s forwards;
 }
 
-/* 🔸 Keyframes for fade + rise */
+/*  Keyframes for fade + rise */
 @keyframes fadeRise {
   0% {
     opacity: 0;
@@ -272,7 +266,7 @@ header, nav, .water-divider {
   width: 100%;
   height: 80px;
   z-index: 5;
-  margin-top: 300px; /* stays fixed regardless of .op-title position */
+  margin-top: 300px; 
   background: linear-gradient(
     180deg,
     #c6423b 0%,
@@ -359,8 +353,8 @@ header, nav, .water-divider {
 .op-desc-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7); /* solid dark filter */
-  backdrop-filter: brightness(0.7); /* optional — makes bg image darker too */
+  background: rgba(0, 0, 0, 0.7); 
+  backdrop-filter: brightness(0.7); 
   pointer-events: none;
 }
 
@@ -645,15 +639,14 @@ header, nav, .water-divider {
 /* ---------- Signup form grid + alignment ---------- */
 /* Make the form align under the signup-lead text */
 .signup-right__inner {
-  /* keep your existing rules, plus these */
-  padding-left: 24px;      /* nudge content left so inputs align beneath the copy */
+  padding-left: 24px;      
   padding-right: 24px;
 }
 
 /* Two-column layout for the form */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* left / right columns */
+  grid-template-columns: 1fr 1fr; 
   gap: 18px 28px;
   align-items: start;
   width: 100%;
@@ -700,10 +693,10 @@ header, nav, .water-divider {
   font-family: "Reddit Sans", sans-serif;
   resize: none;
   line-height: 1.3;
-  padding: 0; /* label provides padding */
+  padding: 0; 
 }
 
-/* floating "blue tag" that acts like the Figma small label behind text */
+
 .label-tag {
   position: absolute;
   left: 12px;
@@ -724,7 +717,7 @@ header, nav, .water-divider {
 /* smaller tag width variant */
 .label-tag.small { width: auto; padding: 2px 6px; }
 
-/* When field active (focused or non-empty) move the label up and shrink it */
+
 .input-group.active label { border-color: #ffd84a; box-shadow: 0 6px 18px rgba(255,200,0,0.06); }
 .input-group.active .label-tag {
   transform: translateY(-22px) scale(.86);
@@ -733,7 +726,7 @@ header, nav, .water-divider {
   opacity: 1;
 }
 
-/* If textarea, keep the tag slightly higher */
+
 .textarea-group .label-tag { transform-origin: left top; }
 .textarea-group.active .label-tag { transform: translateY(-28px) scale(.86); }
 
@@ -773,7 +766,7 @@ header, nav, .water-divider {
   padding: 0;
 }
 
-/* Submit button tweaks: pop & text color change to yellow on hover */
+/* Submit button */
 .btn-submit {
   background: #020202;
   border-radius: 4px;
@@ -792,7 +785,7 @@ header, nav, .water-divider {
 .row.submit-row {
   display: flex;
   justify-content: flex-start;
-  margin-left: 420px; /* adjust value as needed */
+  margin-left: 420px;
   margin-top: 8px;
   gap: 12px;
 }
@@ -885,4 +878,75 @@ header, nav, .water-divider {
 .op-prompt.hide {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+/* ===========================
+   MOBILE VIEWPORT FIXES
+=========================== */
+
+/* ===========================
+   MOBILE FIXES – HOIST YOUR FLAG
+=========================== */
+@media (max-width: 720px) {
+
+  .op-flag-title {
+    font-size: clamp(40px, 8vw, 80px); 
+    text-align: center;
+    margin-top: -25%;
+    padding: 20px;
+    line-height: 1.1;
+  }
+}
+
+/* ===========================
+   MOBILE FIXES – SIGNUP FORM
+=========================== */
+@media (max-width: 720px) {
+  .signup-hero {
+    flex-direction: column;
+    align-items: stretch;
+    top: 0;
+  }
+
+  .signup-left.water-bg {
+    height: 180px;
+    min-width: 100%;
+  }
+
+  .signup-right {
+    width: 100%;
+    height: auto;
+    padding: 32px 20px;
+  }
+
+  .signup-right__inner {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .input-group label {
+    padding: 10px 12px;
+  }
+
+  .row.submit-row {
+    margin: 24px 0 0 0;
+    justify-content: center;
+  }
+
+  .btn-submit {
+    width: 140px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .signup-note {
+    font-size: 16px;
+    text-align: center;
+    padding: 10px 20px;
+  }
 }
