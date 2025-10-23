@@ -155,7 +155,7 @@ Key milestones included:
 | ------------------ | --------------------------------------- |
 | **Title**          | ONE PIECE: Straw Hat Adventure          |
 | **Creator**        | Alfred Anthony Trillanes                |
-| **Course**         | 6WEBCS – Responsive Website Development |
+| **Course**         | 6WEBCS – Introduction to Web Programming for CS |
 | **Date Completed** | October 2025                            |
 
 ⚠️ This project is a non-commercial fan work created for educational and portfolio purposes only.
