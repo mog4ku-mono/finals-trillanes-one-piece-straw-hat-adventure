@@ -3,6 +3,15 @@
    Built for: factions.html (section-based layout)
    ===================================================== */
 
+/* ====== ONE PIECE FONT FIX (LOCAL ONLY FOR FACTIONS) ====== */
+@font-face {
+  font-family: 'One Piece Font';
+  src: url('../txt/one-piece-font.ttf') format('truetype');
+  font-display: swap;
+}
+
+
+
 /* ====== GLOBAL RESET ====== */
 body {
   margin: 0;
@@ -95,7 +104,7 @@ body {
   position: absolute;
   top: 140px;
   left: 60px;
-  font-family: "ONE PIECE", sans-serif;
+  font-family: 'One Piece Font', serif;
   font-size: 80px;
   letter-spacing: -4px;
   background: linear-gradient(90deg, #F6F6F6 0%, #EEE 80%);
