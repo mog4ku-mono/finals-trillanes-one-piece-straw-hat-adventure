@@ -14,7 +14,7 @@
   position: absolute;
   top: 10%;
   left: 0;
-  font-family: "ONE PIECE";
+  font-family: 'One Piece Font', serif;
   font-size: 550px;
   background: linear-gradient(358deg, rgba(239,239,239,0) 1.32%, #efefef 98.68%);
   -webkit-background-clip: text;
@@ -47,7 +47,7 @@
   top: 6%;                 
   left: 4.5%;                
   z-index: 30;
-  font-family: "ONE PIECE";
+  font-family: 'One Piece Font', serif;
   font-size: 48px;         
   letter-spacing: 0;
   background: linear-gradient(90deg, #f00 0%, #900 100%);
